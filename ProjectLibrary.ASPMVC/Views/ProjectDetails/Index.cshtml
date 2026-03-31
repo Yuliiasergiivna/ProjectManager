@@ -1,0 +1,91 @@
+﻿@model IEnumerable<ProjectLibrary.BLL.Entities.Project>
+
+@{
+    ViewData["Title"] = "Projects";
+}
+
+@* <h1>Index</h1>
+
+<div>
+    <h4>Project</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProjectId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectManagerId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProjectManagerId)
+        </dd>
+    </dl>
+</div> *@
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Projects for @ViewBag.EmployeeName</h1>
+        <span class="badge bg-primary">Total: @Model.Count()</span>
+    </div>
+
+    <div class="row">
+        @foreach (var project in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">@project.Name</h5>
+                        <p class="card-text text-muted">
+                            @(project.Description?.Length > 100
+                                                    ? project.Description.Substring(0, 100) + "..."
+                                                    : project.Description)
+                    </p>
+                    <ul class="list-unstyled small">
+                        <li><strong>Created:</strong> @project.CreationDate.ToShortDateString()</li>
+                        <li><strong>Manager ID:</strong> @project.ProjectManagerId</li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-transparent border-top-0 d-flex gap-2">
+                    <a asp-action="Details" asp-route-id="@project.ProjectId" class="btn btn-sm btn-outline-info flex-grow-1">
+                        Details
+                    </a>
+                    <a asp-action="Edit" asp-route-id="@project.ProjectId" class="btn btn-sm btn-outline-warning flex-grow-1">
+                        Edit
+                    </a>
+                </div>
+            </div>
+        </div>
+                }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            You are not assigned to any projects yet.
+        </div>
+    }
+</div>
+<div>
+ @*    @Html.ActionLink("Back to list") | *@
+    <a asp-action="Index" asp-controller ="Home" class="btn btn-secondary">Back to List</a>
+</div>

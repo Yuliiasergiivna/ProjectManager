@@ -27,10 +27,24 @@ namespace ProjectLibrary.BLL.Services
             return _userRepository.Add(user.ToDalUser());
         }
 
-        public Guid? CheckPassword(string email, string password)
+        public BLL.Entities.User CheckPassword(string email, string password)
         {
-           return _userRepository.CheckPassword(email, password);
-
+            Guid? employeeId = _userRepository.CheckPassword(email, password);
+                if (employeeId == null)
+                {
+                    return null;
+                }
+                var dalEmployee = _employeeRepository.GetEmployeeById(employeeId.Value);
+                var user = new BLL.Entities.User
+                (
+                    Guid.Empty,
+                    email,
+                    null,
+                    Guid.Empty,
+                    employeeId.Value
+                    );
+            user.IsProjectManager = dalEmployee.IsProjectManager;
+            return user;
         }
         public bool EmailExists(string email)
         {

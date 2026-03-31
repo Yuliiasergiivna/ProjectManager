@@ -11,6 +11,8 @@ namespace ProjectLibrary.BLL.Entities
         public byte[] Password { get; private set; }
         public Guid Salt { get; private set; }
         public Guid EmployeeId { get; private set; }
+
+        public bool IsProjectManager { get; set; }
         public User(Guid userId, string email, byte[] password,Guid salt, Guid employeeId)
         {
             UserId = userId;
