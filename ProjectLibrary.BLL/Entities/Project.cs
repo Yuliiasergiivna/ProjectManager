@@ -11,7 +11,7 @@ namespace ProjectLibrary.BLL.Entities
         public string Description { get; private set; }
         public DateTime CreationDate { get; private set; }
         public Guid ProjectManagerId { get; private set; }
-        public Project(Guid projectId, string name, string description, DateTime creationDate, DateTime deadline, Guid projectManagerId)
+        public Project(Guid projectId, string name, string description, DateTime creationDate, Guid projectManagerId)
         {
             ProjectId = projectId;
             Name = name;

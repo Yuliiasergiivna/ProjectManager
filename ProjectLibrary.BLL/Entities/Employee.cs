@@ -16,14 +16,29 @@ namespace ProjectLibrary.BLL.Entities
         }
         public string? Email { get; set; }
 
+        public Employee(Guid employeeId, string firstName, string lastName, DateTime hiredate, string? email, bool isProjectManager)
+        {
+            EmployeeId = employeeId;
+            FirstName = firstName;
+            LastName = lastName;
+            Hiredate = hiredate;
+            Email = email;
+            _isProjectManager = isProjectManager;
+        }
+
         public Employee(Guid employeeId, string firstName, string lastName, DateTime hiredate, bool isProjectManager)
         {
             EmployeeId = employeeId;
             FirstName = firstName;
             LastName = lastName;
             Hiredate = hiredate;
-            _isProjectManager = isProjectManager;
+            this._isProjectManager = isProjectManager;
         }
+        public void IsProjectManagerTrue()
+        {
+            _isProjectManager = true;
+        }
+
     }
 
 }

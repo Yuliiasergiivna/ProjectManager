@@ -9,7 +9,7 @@ namespace ProjectLibrary.Common.Repositories
     {
         public Guid Add (TUser user);
         public Guid? CheckPassword(string email, string password);
-        bool EmailExists(string email);
+        public bool EmailExists(string email);
         public TUser GetFromEmployee (Guid employeeId);
 
     }
