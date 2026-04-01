@@ -1,0 +1,90 @@
+﻿@using ProjectLibrary.ASPMVC.Models.Projects
+@model ProjectDetailsViewModel
+
+@{
+    ViewData["Title"] = "Tableau de bord - " + Model.Name + Model.CreationDate.ToShortDateString();
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Bienvenue, @ViewBag.CurrentUserName</h2>
+        <div>
+            @if (Model.isProjectManager)
+            {
+                <a asp-action="Create" class="btn btn-outline-success btn-sm">+ Créer Projet</a>
+            }
+            <a asp-action="Logout" asp-controller="Auth" class="btn btn-outline-danger btn-sm">Déconnexion</a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h3 class="card-title">@Model.Name <small class="text-muted">(@Model.ProjectId)</small></h3>
+            <p class="card-text">@Model.Description</p>
+            @if (Model.isProjectManager)
+            {
+                <a href="#" class="btn btn-link p-0 text-decoration-none">Modifier la description</a>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-info text-white">
+                    Équipe du projet
+                </div>
+                <div class="card-body">
+                    @if (Model.isProjectManager)
+                    {
+                        <button class="btn btn-sm btn-success mb-3">+ Ajouter un membre</button>
+                    }
+                    <ul class="list-group list-group-flush">
+                        @foreach (var member in Model.Membres)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="mailto:@member.Email" class="text-decoration-none">
+                                    @member.FirstName @member.LastName
+                                    @if (member.IsProjectManager)
+                                    {
+                                        <small>(Chef)</small>
+                                    }
+                                </a>
+                                @if (Model.isProjectManager && !member.IsProjectManager)
+                                {
+                                    <span class="text-danger" style="cursor:pointer">❌</span>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+  
+        <div class="col-md-8">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-secondary text-white d-flex justify-content-between">
+                    Flux des messages
+                    <a href="#" class="text-white text-decoration-none small">Rédiger un nouveau post</a>
+                </div>
+                <div class="card-body">
+                    @if (!Model.Posts.Any())
+                    {
+                        <p class="text-muted">Aucun message pour le moment.</p>
+                    }
+                    @foreach (var post in Model.Posts)
+                    {
+                        <div class="border rounded p-3 mb-3 bg-light">
+                            <strong>Sujet : Post du @post.SendDate.ToShortDateString()</strong><br />
+                            <small class="text-muted">Posté par @post.AuthorName</small>
+                            <p class="mt-2 mb-0">@post.Content</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

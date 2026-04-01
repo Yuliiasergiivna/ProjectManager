@@ -1,50 +1,13 @@
-﻿@model IEnumerable<ProjectLibrary.BLL.Entities.Project>
+﻿@using ProjectLibrary.ASPMVC.Models.Projects
+@model IEnumerable< ProjectViewModel>
 
 @{
     ViewData["Title"] = "Projects";
 }
 
-@* <h1>Index</h1>
-
-<div>
-    <h4>Project</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProjectId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProjectId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreationDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProjectManagerId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProjectManagerId)
-        </dd>
-    </dl>
-</div> *@
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Projects for @ViewBag.EmployeeName</h1>
+    <div class=" d-flex justify-content-between align-items-center mb-4">
+        <h1>Projects pour @ViewBag.EmployeeName</h1>
         <span class="badge bg-primary">Total: @Model.Count()</span>
     </div>
 
@@ -62,7 +25,7 @@
                     </p>
                     <ul class="list-unstyled small">
                         <li><strong>Created:</strong> @project.CreationDate.ToShortDateString()</li>
-                        <li><strong>Manager ID:</strong> @project.ProjectManagerId</li>
+                        <li><strong>Manager ID:</strong> @project.ManagerName</li>
                     </ul>
                 </div>
                 <div class="card-footer bg-transparent border-top-0 d-flex gap-2">
@@ -85,7 +48,4 @@
         </div>
     }
 </div>
-<div>
- @*    @Html.ActionLink("Back to list") | *@
-    <a asp-action="Index" asp-controller ="Home" class="btn btn-secondary">Back to List</a>
-</div>
+

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using ProjectLibrary.BLL.Services;
+using Microsoft.AspNetCore.Mvc;
 using ProjectLibrary.ASPMVC.Handlers;
+using ProjectLibrary.ASPMVC.Models;
+using ProjectLibrary.BLL.Services;
+using ProjectLibrary.DAL.Services;
 
 namespace ProjectLibrary.ASPMVC.Controllers
 {
@@ -22,21 +24,30 @@ namespace ProjectLibrary.ASPMVC.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Login(string email, string password)
+        public IActionResult Login(LoginViewModel model)
         {
-            var user = _authService.CheckPassword(email, password);
-            if (user != null)
-            {
-                _userSessionManager.UserId = user.EmployeeId;
-                    _userSessionManager.IsProjectManager = user.IsProjectManager;
+           if (ModelState.IsValid)
+           {
+               var user = _authService.CheckPassword(model.Email, model.Password);
 
-                return RedirectToAction("Index", "ProjectDetails");
+                if (user != null)
+              {
+                   _userSessionManager.UserId = user.EmployeeId;
+                   _userSessionManager.IsProjectManager = user.IsProjectManager;
+
+
+                   return RedirectToAction("Index", "ProjectDetails", new { id = user.EmployeeId });
+                }
+                 ModelState.AddModelError(string.Empty, "Email ou mot de passe incorrect.");
+                return RedirectToAction("Details", "ProjectDetails");
+
+                }
+                 return View(model);
             }
-            return View();
-        }
-        public IActionResult Index()
+            public IActionResult Index()
         {
-            return RedirectToAction("Login");
+           return RedirectToAction("Login");
         }
+
     }
 }

@@ -1,17 +1,19 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace ProjectLibrary.ASPMVC.Models
+namespace ProjectLibrary.ASPMVC.Models.Projects
 {
-    public class ProjectViewModel
+    public class ProjectCreateViewModel
     {
         [ScaffoldColumn(false)]
         public Guid ProjectId { get; set; }
-        [DisplayName("Nom de project")]
+        [ScaffoldColumn(false)]
+        public Guid ProjectManagerId { get; set; }
+        [DisplayName("Nom de projet: ")]
         public string Name { get; set; }
-        [DisplayName("Description")]
+        [DisplayName("Description: ")]
         public string Description { get; set; }
+        [DisplayName("Date de création: ")]
         public DateTime CreationDate { get; set; }
-        public string ManagerName { get; set; }
     }
 }

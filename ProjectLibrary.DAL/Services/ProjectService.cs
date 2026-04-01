@@ -62,7 +62,7 @@ namespace ProjectLibrary.DAL.Services
         {
            using (SqlCommand command = _connection.CreateCommand())
             {
-                command.CommandText = "SP_Project_Get_FromProjectId";
+                command.CommandText = "SP_Project_Get_ById";
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue(nameof(ProjectId), ProjectId);
                 _connection.Open();
@@ -72,7 +72,7 @@ namespace ProjectLibrary.DAL.Services
                     {
                         return reader.ToProject();
                     }
-                    throw new ArgumentOutOfRangeException();
+                    return null;
                 }
                 _connection.Close();
             }
@@ -105,7 +105,7 @@ namespace ProjectLibrary.DAL.Services
             {
                 command.CommandText = "SP_Project_Get_FromProjectManagerId";
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue(nameof(managerId), managerId);
+                command.Parameters.AddWithValue("@projectManagerId", managerId);
                 if (_connection.State != ConnectionState.Open) _connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
                 {
